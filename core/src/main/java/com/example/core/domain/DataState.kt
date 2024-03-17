@@ -2,37 +2,22 @@ package com.example.core.domain
 
 sealed class DataState<T>(
     var data: T? = null,
-    var stateMessage: StateMessage? = null,
+    var apiError: ApiError? = null,
 ) {
-    class Loading<T>(
-        data: T? = null,
-    ) : DataState<T>()
+    class Loading<T> : DataState<T>()
 
-    open class Success<T>(
+    class Success<T>(
         data: T? = null,
-        stateMessage: StateMessage? = null,
-        val cached: Boolean = false
+        var cached: Boolean = false
     ) : DataState<T>(
-        data = data,
-        stateMessage = stateMessage
-    )
-
-    class PageSuccess<T>(
-        data: T? = null,
-        stateMessage: StateMessage? = null,
-        cached: Boolean = false,
-        val extraPagesAvailable: Boolean = true
-    ) : Success<T>(
-        data = data,
-        stateMessage = stateMessage,
-        cached = cached
+        data = data
     )
 
     class Error<T>(
-        stateMessage: StateMessage? = null,
+        apiError: ApiError? = null,
         data: T? = null
     ) : DataState<T>(
         data = data,
-        stateMessage = stateMessage
+        apiError = apiError
     )
 }

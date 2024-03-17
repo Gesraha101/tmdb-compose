@@ -6,7 +6,7 @@ object BuildConfig {
 object AndroidX {
 
     // Compose
-    const val composeVersion = "1.5.2"
+    const val composeVersion = "1.4.1"
     private const val composeToolsVersion = "1.6.3"
 
     private const val lifeCycleVersion = "2.5.1"
@@ -20,9 +20,6 @@ object AndroidX {
 
     private const val activityComposeVersion = "1.6.1"
     const val activityCompose = "androidx.activity:activity-compose:$activityComposeVersion"
-
-    private const val composeMaterialVersion = "1.3.1"
-    const val composeMaterial = "androidx.compose.material:material:$composeMaterialVersion"
 
     private const val composeNavVersion = "2.5.3"
     const val composeNav = "androidx.navigation:navigation-compose:$composeNavVersion"
@@ -44,4 +41,10 @@ object AndroidX {
     const val composeUiManifestTest = "androidx.compose.ui:ui-test-manifest:$composeToolsVersion"
 
     const val composeRuntime = "androidx.compose.runtime:runtime:$composeToolsVersion"
+
+    private const val composeMaterial3Version = "1.2.1"
+    const val composeMaterial3 = "androidx.compose.material3:material3:$composeMaterial3Version"
+
+    const val composeMaterialWindowSizeClass = "androidx.compose.material3:material3-window-size-class:$composeMaterial3Version"
+
 }
