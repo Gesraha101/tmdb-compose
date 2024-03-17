@@ -5,7 +5,8 @@ apply {
 dependencies {
     "implementation"(AndroidX.lifeCycleRuntime)
     "implementation"(AndroidX.activityCompose)
-    "implementation"(AndroidX.composeMaterial)
+    "implementation"(AndroidX.composeMaterial3)
+    "implementation"(AndroidX.composeMaterialWindowSizeClass)
     "implementation"(AndroidX.composeNav)
     "implementation"(AndroidX.composeHilt)
     "implementation"(AndroidX.composeUi)

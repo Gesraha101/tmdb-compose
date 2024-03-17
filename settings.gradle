@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "tmdb-compose"
 include ':app'
 include ':core'
+include ':coreUI'
 include ':ui'

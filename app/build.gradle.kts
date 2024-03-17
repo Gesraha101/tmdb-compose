@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace = "com.example.tmdb"
     compileSdk = 34
     buildToolsVersion = "34.0.0"
 
@@ -31,8 +32,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
 
     buildFeatures {
@@ -42,21 +43,21 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = AndroidX.composeVersion
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "18"
     }
-    namespace = "com.example.tmdb"
 
 }
 
 dependencies {
 
     implementation(project(Modules.core))
+    implementation(project(Modules.coreUI))
     implementation(project(Modules.ui))
 
     implementation(Hilt.android)

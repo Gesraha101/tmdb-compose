@@ -7,8 +7,9 @@ plugins {
 }
 
 android {
-    namespace = "com.example.core"
+    namespace = "com.example.coreui"
 }
 
 dependencies {
+    "implementation"(project(Modules.core))
 }

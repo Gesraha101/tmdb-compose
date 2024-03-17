@@ -5,7 +5,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Tmdbcompose">
+            android:theme="@style/Theme.TmdbCompose">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
