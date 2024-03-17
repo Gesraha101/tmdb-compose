@@ -17,7 +17,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
@@ -31,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -44,6 +42,7 @@ import coil.request.ImageRequest
 import com.example.coreui.components.AppScaffold
 import com.example.ui.R
 import com.example.ui.list.states.ListMoviesState
+import com.example.ui.shared.EmptyScreen
 import com.example.core.R as coreR
 
 
@@ -60,6 +59,7 @@ fun ListScreen(viewModel: MoviesListViewModel = hiltViewModel(), onMovieClick: (
             apiError = apiError,
             topBar = {
                 AppHeader(scrollBehavior = scrollBehavior, query = searchQuery) {
+
                     searchQuery = it
                     viewModel.resetPagination(searchQuery)
                 }
@@ -83,13 +83,16 @@ fun ListScreen(viewModel: MoviesListViewModel = hiltViewModel(), onMovieClick: (
                 if (shouldGetNextPage) viewModel.requestMovies(searchQuery)
             }
 
-            Box(Modifier.nestedScroll(state.nestedScrollConnection)) {
-                MoviesList(moviesState ?: cachedMoviesState, lazyListState, onMovieClick)
-                PullToRefreshContainer(
-                    modifier = Modifier.align(Alignment.TopCenter),
-                    state = state,
-                )
-            }
+            if (!viewModel.hasData && viewModel.hasError)
+                EmptyScreen()
+            else
+                Box(Modifier.nestedScroll(state.nestedScrollConnection)) {
+                    MoviesList(moviesState ?: cachedMoviesState, lazyListState, onMovieClick)
+                    PullToRefreshContainer(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        state = state,
+                    )
+                }
 
             LaunchedEffect(state.isRefreshing) {
                 if (state.isRefreshing)
@@ -128,9 +131,6 @@ fun SearchInput(
         onActiveChange = {},
         onSearch = onQueryChange,
         query = query,
-        colors = SearchBarDefaults.colors(
-            containerColor = Color.Cyan
-        ),
         trailingIcon = { Icon(imageVector = Icons.Rounded.Search, contentDescription = null) },
         placeholder = {
             Text(text = stringResource(id = R.string.placeholder_search))

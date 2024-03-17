@@ -14,10 +14,9 @@ class PaginationDelegate @Inject constructor() {
     val dataSet = ArrayList<Any>()
     var page by mutableStateOf(1)
     private var listState by mutableStateOf(ListState.IDLE)
-
     val paginationAllowed: Boolean
         get() = listState != ListState.END_OF_PAGINATION && listState == ListState.IDLE
-    val extraPagesAvailable get() = listState != ListState.END_OF_PAGINATION
+    val hasError get() = listState == ListState.API_ERROR || listState == ListState.NETWORK_ERROR
 
     fun blockPaging() {
         listState = ListState.LOADING

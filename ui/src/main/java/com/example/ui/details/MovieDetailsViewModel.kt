@@ -1,6 +1,5 @@
 package com.example.ui.details
 
-import androidx.lifecycle.SavedStateHandle
 import com.example.core.domain.DataState
 import com.example.core.ui.ViewState
 import com.example.coreui.bases.BaseViewModel
@@ -19,9 +18,8 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor(
     screenStateDelegate: ScreenStateDelegate,
     paginationDelegate: PaginationDelegate,
-    state: SavedStateHandle,
-    val getMovieDetailsUseCase: GetMovieDetailsUseCase,
-) : BaseViewModel<MovieDetailsAction>(screenStateDelegate, paginationDelegate, state) {
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+) : BaseViewModel<MovieDetailsAction>(screenStateDelegate, paginationDelegate) {
 
     var details =
         uiState.filterIsInstance<MovieDetailsState.DisplayMovieDetails>()

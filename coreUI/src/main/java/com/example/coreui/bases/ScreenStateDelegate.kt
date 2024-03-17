@@ -21,8 +21,7 @@ import javax.inject.Inject
 class ScreenStateDelegate @Inject constructor(
 ) {
     private var loadingShown = mutableStateOf(false)
-    val isLoading get() = loadingShown
-    private var mApiError = MutableStateFlow<ApiError?>(null)
+    private var apiError = MutableStateFlow<ApiError?>(null)
     private val ongoingRequests = HashSet<ViewAction>()
 
     fun showLoading() {
@@ -37,7 +36,7 @@ class ScreenStateDelegate @Inject constructor(
         errorTitle: String? = null,
         errorDesc: String? = null
     ) {
-        mApiError.update { ApiError(errorTitle, errorDesc) }
+        apiError.update { ApiError(errorTitle, errorDesc) }
         hideLoading()
     }
 
@@ -74,7 +73,7 @@ class ScreenStateDelegate @Inject constructor(
         Container: @Composable ScreenStatesScope.() -> Unit
     ) {
         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-        val error by mApiError.collectAsStateWithLifecycle()
+        val error by apiError.collectAsStateWithLifecycle()
 
         val isLoading by remember { loadingShown }
 

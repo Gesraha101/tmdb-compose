@@ -1,6 +1,5 @@
 package com.example.coreui.bases
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.ApiError
@@ -10,9 +9,9 @@ import com.example.core.ui.Loading
 import com.example.core.ui.ViewAction
 import com.example.core.ui.ViewState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -21,11 +20,11 @@ import kotlinx.coroutines.flow.update
 
 abstract class BaseViewModel<ACTION : ViewAction>(
     val screenStateDelegate: ScreenStateDelegate,
-    protected val paginationDelegate: PaginationDelegate,
-    private val state: SavedStateHandle
+    protected val paginationDelegate: PaginationDelegate
 ) : ViewModel() {
 
-    protected val uiState = MutableStateFlow<ViewState?>(null)
+    private val dataFlow = MutableSharedFlow<ACTION?>()
+    protected var uiState = MutableStateFlow<ViewState?>(null)
 
     fun <T> Flow<T>.collectAsStateFlow() = stateIn(
         viewModelScope,
@@ -55,10 +54,6 @@ abstract class BaseViewModel<ACTION : ViewAction>(
                 }
             }
         }
-    }
-
-    suspend fun enqueueSuspendAction(action: ACTION): ViewState? {
-        return initAction(action).lastOrNull()
     }
 
     fun enqueuePagingAction(action: ACTION) {
@@ -91,9 +86,5 @@ abstract class BaseViewModel<ACTION : ViewAction>(
     override fun onCleared() {
         paginationDelegate.reset()
         super.onCleared()
-    }
-
-    companion object {
-        private const val UI_STATE_KEY = "UI_STATE_KEY"
     }
 }
