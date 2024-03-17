@@ -37,6 +37,7 @@ import com.example.coreui.components.RatingBar
 import com.example.domain.models.Movie
 import com.example.ui.R
 import com.example.ui.details.actions.MovieDetailsAction
+import com.example.ui.shared.EmptyScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,7 +72,10 @@ fun DetailsScreen(id: Int, viewModel: MovieDetailsViewModel = hiltViewModel(), o
                     }
                 )
             }) {
-            movie?.let { MovieDetailsBackdrop(movie = it) }
+            if (apiError != null)
+                EmptyScreen()
+            else
+                movie?.let { MovieDetailsBackdrop(movie = it) }
         }
     }
 }

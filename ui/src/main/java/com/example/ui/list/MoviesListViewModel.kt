@@ -1,6 +1,5 @@
 package com.example.ui.list
 
-import androidx.lifecycle.SavedStateHandle
 import com.example.core.domain.DataState
 import com.example.core.ui.ViewState
 import com.example.coreui.bases.BaseViewModel
@@ -20,10 +19,9 @@ import javax.inject.Inject
 class MoviesListViewModel @Inject constructor(
     screenStateDelegate: ScreenStateDelegate,
     paginationDelegate: PaginationDelegate,
-    state: SavedStateHandle,
-    val topRatedMoviesUseCase: ListTopRatedMoviesUseCase,
-    val searchMoviesUseCase: SearchMoviesUseCase
-) : BaseViewModel<ListMoviesAction>(screenStateDelegate, paginationDelegate, state) {
+    private val topRatedMoviesUseCase: ListTopRatedMoviesUseCase,
+    private val searchMoviesUseCase: SearchMoviesUseCase
+) : BaseViewModel<ListMoviesAction>(screenStateDelegate, paginationDelegate) {
 
     var cachedMovies =
         uiState.filterIsInstance<ListMoviesState.ListCachedMovies>()
@@ -32,6 +30,8 @@ class MoviesListViewModel @Inject constructor(
         uiState.filterIsInstance<ListMoviesState.ListMovies>()
             .collectAsStateFlow()
     val canPaginate get() = paginationDelegate.paginationAllowed
+    val hasData get() = paginationDelegate.dataSet.isNotEmpty() || cachedMovies.value?.list?.isNotEmpty() == true
+    val hasError get() = paginationDelegate.hasError
 
     override fun requestSucceeded(action: ListMoviesAction, data: Any?): ListMoviesState {
         return when (action) {
