@@ -58,6 +58,10 @@ dependencies {
 
     implementation(project(Modules.core))
     implementation(project(Modules.coreUI))
+    implementation(project(Modules.remote))
+    implementation(project(Modules.local))
+    implementation(project(Modules.repo))
+    implementation(project(Modules.domain))
     implementation(project(Modules.ui))
 
     implementation(Hilt.android)
