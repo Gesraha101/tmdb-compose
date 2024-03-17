@@ -14,4 +14,5 @@ android {
 dependencies {
     "implementation"(project(Modules.core))
     "implementation"(project(Modules.coreUI))
+    "implementation"(project(Modules.domain))
 }
