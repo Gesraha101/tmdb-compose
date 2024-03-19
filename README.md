@@ -83,3 +83,8 @@ It is worth mentioning that the base view model has a single state flow that is 
 For caching mechanism, the desicion was to cache only 1 page (the last page acquired by user) to save storage and simplify the demo. Caching is not applied in search flow for the same reason.
 
 Regarding the search feature, it is missing the debounce operator to reduce redundant API calls and unnecessary data processing. This is due to not having a single request flow and should be doable once I have it.
+
+Git strategy
+-------
+
+each feature has its own branch. Once the feature is done, a PR is made. After approval, PR is rebased onto dev rather than merged for cleaner git history. Also, all commits are squashed into a single commit before rebasing, creating one big commit in each branch.
